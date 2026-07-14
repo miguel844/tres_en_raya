@@ -2,7 +2,7 @@ const playerTurn = document.getElementById("playerTurn");
 const gameboard = document.getElementById("gameboard");
 const statusGame = document.getElementById("statusGame");
 const resetBtn = document.getElementById("resetBtn");
-resetBtn.addEventListener("click", function(){
+resetBtn.addEventListener("click", function () {
     restartGame();
 });
 
@@ -53,14 +53,14 @@ function makeMove(move) {
     if (gameOver) return;
     if (board[move]) return;
     board[move] = currentPlayer;
-    
+
     console.log(board);
     refreshUI();
-    if (checkWinning()){
+    if (checkWinning()) {
         winGame();
         return;
     }
-    if (checkDraw()){
+    if (checkDraw()) {
         drawGame();
         return;
     }
@@ -68,14 +68,14 @@ function makeMove(move) {
     playersTurn();
 }
 
-function checkDraw(){
-    return board.every(function(position){
+function checkDraw() {
+    return board.every(function (position) {
         return position !== "";
     });
 }
 
 function checkWinning() {
-   return winningCombinations.some(function (combination) {
+    return winningCombinations.some(function (combination) {
         const position0 = board[combination[0]];
         const position1 = board[combination[1]];
         const position2 = board[combination[2]];
@@ -101,29 +101,30 @@ function refreshUI() {
     });
 }
 
-function winGame(){
+function winGame() {
     statusGame.textContent = "El ganador es el jugador " + currentPlayer;
     gameOver = true;
     resetBtn.classList.remove("hidden");
     return;
 }
 
-function drawGame(){
+function drawGame() {
     statusGame.textContent = "El juego es un empate";
     gameOver = true;
+    resetBtn.classList.remove("hidden");
     return;
 }
 
-function playersTurn(){
+function playersTurn() {
     return playerTurn.textContent = "Turno del jugador " + currentPlayer;
 }
 
-function restartGame(){
+function restartGame() {
     board = ["", "", "", "", "", "", "", "", ""];
-    currentPlayer = "X";
+    playersTurn();
     gameOver = false;
     resetBtn.classList.add("hidden");
-statusGame.textContent = "";
+    statusGame.textContent = "";
 
     refreshUI();
 }
